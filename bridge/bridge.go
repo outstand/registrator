@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	dockerapi "github.com/fsouza/go-dockerclient"
 )
@@ -169,6 +170,8 @@ func (b *Bridge) add(containerId string, quiet bool) {
 		// Alternatively, remove and readd or resubmit.
 		return
 	}
+
+	time.Sleep(1 * time.Millisecond)
 
 	container, err := b.docker.InspectContainer(containerId)
 	if err != nil {

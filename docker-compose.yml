@@ -1,0 +1,28 @@
+services:
+  registrator:
+    image: 786715713882.dkr.ecr.us-east-1.amazonaws.com/registrator:outstand
+    build: .
+    volumes:
+      - mutagen-code:/opt/registrator
+
+volumes:
+  mutagen-code:
+    labels:
+      com.outstand.mutagen-sync: true
+
+x-mutagen:
+  sync:
+    defaults:
+      permissions:
+        defaultOwner: "id:501"
+        defaultGroup: "id:20"
+        defaultFileMode: 0644
+        defaultDirectoryMode: 0755
+      ignore:
+        vcs: true
+        paths:
+          - ".*.swp"
+    code:
+      alpha: "."
+      beta: "volume://mutagen-code"
+      mode: two-way-safe
